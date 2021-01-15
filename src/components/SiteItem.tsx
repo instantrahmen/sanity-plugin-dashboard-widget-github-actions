@@ -9,41 +9,48 @@ interface Props {
 }
 
 export default class SiteItem extends React.Component<Props> {
+  state = {
+    badgeSuffix: 0,
+    buttonDisabled: false,
+    imageUrl: ''
+  }
 
+  private imgInterval?: any
 
-  // private badge = React.createRef<HTMLImageElement>()
-  // private imgInterval?: any
+  async updateImage() {
+    this.setState({badgeSuffix: this.state.badgeSuffix + 1}, () => {
+      this.updateImageUrl();
+    })
+  }
 
-  // componentDidMount() {
-  //   this.imgInterval = window.setInterval(() => {
-  //     this.updateImage()
-  //   }, 10000)
-  // }
+  componentDidMount() {
+    this.imgInterval = window.setInterval(() => {
+      this.updateImage()
+    }, 10000)
+  }
 
   componentWillUnmount() {
-    // window.clearInterval(this.imgInterval)
+    window.clearInterval(this.imgInterval)
   }
 
   handleDeployButtonClicked = (_: MouseEvent) => {
     this.props.onDeploy(this.props.site);
 
-    // setTimeout(() => {
-    //   this.updateImage()
-    // }, 1000)
+    this.setState({buttonDisabled: true})
+    setTimeout(() => {
+      this.updateImage()
+    }, 5000)
+
+    setTimeout(() => {
+      this.setState({buttonDisabled: false})
+    }, 10000)
   }
 
-  // private getImageUrl() {
-  //   const { site } = this.props
-  //   return `https://api.netlify.com/api/v1/badges/${site.id}/deploy-status`
-  // }
-  //
-  // private updateImage() {
-  //   const image = this.badge && this.badge.current
-  //   if (image) {
-  //     image.src = `${this.getImageUrl()}?${new Date().getTime()}`
-  //   }
-  // }
-
+  private updateImageUrl() {
+    const { site } = this.props
+    this.setState({imageUrl: `https://github.com/${site.githubRepoOwner}/${site.githubRepo}/workflows/Build%20and%20Deploy/badge.svg?random=${this.state.badgeSuffix}`})
+  }
+  
   private renderLinks() {
     const { site } = this.props
     if (!site.url) {
@@ -72,11 +79,12 @@ export default class SiteItem extends React.Component<Props> {
             {this.renderLinks()}
           </h4>
           <div>
-            {/*  <img src={this.getImageUrl()} ref={this.badge} />*/}
+             <img src={this.state.imageUrl} />
           </div>
         </div>
         <div className={styles.actions}>
-          <DefaultButton inverted onClick={this.handleDeployButtonClicked}>
+          {/* @ts-ignore */}
+          <DefaultButton disabled={this.state.buttonDisabled} onClick={this.handleDeployButtonClicked}>
             Deploy
           </DefaultButton>
         </div>
