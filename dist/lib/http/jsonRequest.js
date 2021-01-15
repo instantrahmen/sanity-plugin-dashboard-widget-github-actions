@@ -11,7 +11,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jsonRequest = void 0;
 var rxjs_1 = require("rxjs");
 var createAbortController_1 = require("./utils/createAbortController");
 exports.jsonRequest = function (input, init) {
@@ -29,7 +28,7 @@ exports.jsonRequest = function (input, init) {
                 subscriber.error(err);
             }
         };
-        fetch(input, __assign(__assign({}, init), { signal: controller.signal }))
+        fetch(input, __assign({}, init, { signal: controller.signal }))
             .then(function (res) {
             if (res.status < 200 || res.status > 299) {
                 throw new Error("HTTP Error " + res.status + ": " + res.statusText);

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deploy = void 0;
 var operators_1 = require("rxjs/operators");
 var statusCodeRequest_1 = require("../http/statusCodeRequest");
 function deploy(site) {

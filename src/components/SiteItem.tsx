@@ -12,18 +12,20 @@ export default class SiteItem extends React.Component<Props> {
   state = {
     badgeSuffix: 0,
     buttonDisabled: false,
-    imageUrl: ''
+    // buttonText: 'Deploy',
+    imageUrl: '',
   }
 
   private imgInterval?: any
 
   async updateImage() {
-    this.setState({badgeSuffix: this.state.badgeSuffix + 1}, () => {
-      this.updateImageUrl();
+    this.setState({ badgeSuffix: this.state.badgeSuffix + 1 }, () => {
+      this.updateImageUrl()
     })
   }
 
   componentDidMount() {
+    this.updateImage()
     this.imgInterval = window.setInterval(() => {
       this.updateImage()
     }, 10000)
@@ -34,23 +36,25 @@ export default class SiteItem extends React.Component<Props> {
   }
 
   handleDeployButtonClicked = (_: MouseEvent) => {
-    this.props.onDeploy(this.props.site);
+    this.props.onDeploy(this.props.site)
 
-    this.setState({buttonDisabled: true})
+    this.setState({ buttonDisabled: true })
     setTimeout(() => {
       this.updateImage()
     }, 5000)
 
     setTimeout(() => {
-      this.setState({buttonDisabled: false})
-    }, 10000)
+      this.setState({ buttonDisabled: false })
+    }, 20000)
   }
 
   private updateImageUrl() {
     const { site } = this.props
-    this.setState({imageUrl: `https://github.com/${site.githubRepoOwner}/${site.githubRepo}/workflows/Build%20and%20Deploy/badge.svg?random=${this.state.badgeSuffix}`})
+    this.setState({
+      imageUrl: `https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/instantrahmen/19c87ce1f1083bf152221bdac86f1c7c/raw/tsukimoon-status-badge.json?random=${this.state.badgeSuffix}`,
+    })
   }
-  
+
   private renderLinks() {
     const { site } = this.props
     if (!site.url) {
@@ -61,7 +65,9 @@ export default class SiteItem extends React.Component<Props> {
         {' ('}
         {site.url && (
           <span>
-            <a href={site.url} target={'blank'}>view</a>
+            <a href={site.url} target={'blank'}>
+              view
+            </a>
           </span>
         )}
         {')'}
@@ -71,6 +77,9 @@ export default class SiteItem extends React.Component<Props> {
 
   render() {
     const { site } = this.props
+    const buttonProps = {
+      disabled: this.state.buttonDisabled,
+    }
     return (
       <li className={styles.root}>
         <div className={styles.status}>
@@ -79,13 +88,19 @@ export default class SiteItem extends React.Component<Props> {
             {this.renderLinks()}
           </h4>
           <div>
-             <img src={this.state.imageUrl} />
+            {/* <img src={this.state.imageUrl} /> */}
+            <svg height="20">
+              <image xlinkHref={this.state.imageUrl} height="20" />
+            </svg>
           </div>
         </div>
         <div className={styles.actions}>
-          {/* @ts-ignore */}
-          <DefaultButton disabled={this.state.buttonDisabled} onClick={this.handleDeployButtonClicked}>
-            Deploy
+          <DefaultButton
+            inverted
+            onClick={this.handleDeployButtonClicked}
+            {...buttonProps}
+          >
+            {this.state.buttonDisabled ? 'Deploying...' : 'Deploy'}
           </DefaultButton>
         </div>
       </li>

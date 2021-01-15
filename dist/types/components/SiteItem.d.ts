@@ -5,8 +5,17 @@ interface Props {
     onDeploy: DeployAction;
 }
 export default class SiteItem extends React.Component<Props> {
+    state: {
+        badgeSuffix: number;
+        buttonDisabled: boolean;
+        imageUrl: string;
+    };
+    private imgInterval?;
+    updateImage(): Promise<void>;
+    componentDidMount(): void;
     componentWillUnmount(): void;
     handleDeployButtonClicked: (_: MouseEvent) => void;
+    private updateImageUrl;
     private renderLinks;
     render(): JSX.Element;
 }

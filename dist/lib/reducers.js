@@ -11,25 +11,24 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stateReducer$ = void 0;
 var operators_1 = require("rxjs/operators");
 exports.stateReducer$ = operators_1.scan(function (state, action) {
     switch (action.type) {
         case 'setSites':
-            return __assign(__assign({}, state), { sites: action.sites || [] });
+            return __assign({}, state, { sites: action.sites || [] });
         case 'deploy/started':
-            return __assign(__assign({}, state), { sites: state.sites.map(function (site) {
+            return __assign({}, state, { sites: state.sites.map(function (site) {
                     if (action.site && site.id === action.site.id) {
                         return __assign({}, site);
                     }
                     return site;
                 }) });
         case 'deploy/failed':
-            return __assign(__assign({}, state), { error: action.error });
+            return __assign({}, state, { error: action.error });
         case 'deploy/completed':
-            return __assign(__assign({}, state), { sites: state.sites.map(function (site) {
+            return __assign({}, state, { sites: state.sites.map(function (site) {
                     if (action.site && site.id === action.site.id) {
-                        return __assign(__assign({}, site), { error: action.error });
+                        return __assign({}, site, { error: action.error });
                     }
                     return site;
                 }), requestSuccessful: true });

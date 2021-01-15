@@ -11,7 +11,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.props$ = void 0;
 var rxjs_1 = require("rxjs");
 var react_props_stream_1 = require("react-props-stream");
 var operators_1 = require("rxjs/operators");
