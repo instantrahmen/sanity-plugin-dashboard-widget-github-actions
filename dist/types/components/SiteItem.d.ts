@@ -6,7 +6,7 @@ interface Props {
 }
 export default class SiteItem extends React.Component<Props> {
     state: {
-        badgeSuffix: number;
+        badgeSuffix: string;
         buttonDisabled: boolean;
         imageUrl: string;
     };

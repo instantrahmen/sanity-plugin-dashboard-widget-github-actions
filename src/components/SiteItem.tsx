@@ -2,7 +2,7 @@ import React from 'react'
 import DefaultButton from 'part:@sanity/components/buttons/default'
 import styles from './SiteItem.css'
 import { DeployAction, Site } from '../types'
-
+import { v4 as uuid } from 'uuid'
 interface Props {
   site: Site
   onDeploy: DeployAction
@@ -10,7 +10,7 @@ interface Props {
 
 export default class SiteItem extends React.Component<Props> {
   state = {
-    badgeSuffix: 0,
+    badgeSuffix: '',
     buttonDisabled: false,
     // buttonText: 'Deploy',
     imageUrl: '',
@@ -19,7 +19,7 @@ export default class SiteItem extends React.Component<Props> {
   private imgInterval?: any
 
   async updateImage() {
-    this.setState({ badgeSuffix: this.state.badgeSuffix + 1 }, () => {
+    this.setState({ badgeSuffix: uuid() }, () => {
       this.updateImageUrl()
     })
   }

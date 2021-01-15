@@ -65,12 +65,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var default_1 = __importDefault(require("part:@sanity/components/buttons/default"));
 var SiteItem_css_1 = __importDefault(require("./SiteItem.css"));
+var uuid_1 = require("uuid");
 var SiteItem = /** @class */ (function (_super) {
     __extends(SiteItem, _super);
     function SiteItem() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            badgeSuffix: 0,
+            badgeSuffix: '',
             buttonDisabled: false,
             // buttonText: 'Deploy',
             imageUrl: '',
@@ -91,7 +92,7 @@ var SiteItem = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
-                this.setState({ badgeSuffix: this.state.badgeSuffix + 1 }, function () {
+                this.setState({ badgeSuffix: uuid_1.v4() }, function () {
                     _this.updateImageUrl();
                 });
                 return [2 /*return*/];

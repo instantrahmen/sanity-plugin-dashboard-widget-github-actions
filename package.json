@@ -126,8 +126,10 @@
     "typescript": "^3.0.3"
   },
   "dependencies": {
+    "@types/uuid": "^8.3.0",
     "abort-controller": "^2.0.3",
-    "react-props-stream": "^1.0.0"
+    "react-props-stream": "^1.0.0",
+    "uuid": "^8.3.2"
   },
   "directories": {
     "doc": "docs",
